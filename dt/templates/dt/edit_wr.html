@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<h3 class="text_center m-4">Modifie les donnée de demande</h3>
+{% if success %}
+<div class = 'alert alert-success' role = 'alert'> 
+    Demande de travaux modifie
+    <a href = '{% url "handel_work_request" %}' class = 'alert-link'>  Retour page accueil</a>
+</div>
+{% else %}
+<div class = 'row justify-content-center'>
+    <div class = 'col-8'>
+        <div class = 'card-bg-light mb-3'>
+            <div class=" card-header">
+                <i class = 'fa fa-envelope'></i> Enter les détail de demande
+            </div>
+            <div class = 'card-body'> 
+                <form action = '' method = 'post'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button type = 'submit' class = 'btn btn-primary'>Envoyer</button>
+                    <a href =" {% url 'handel_work_request' %}" class = 'btn btn-secondary'>Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
