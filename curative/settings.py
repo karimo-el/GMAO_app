@@ -44,9 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dt',
+    "personnel",
+    'crispy_forms',
+
     
 ]
 SITE_ID = 1
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
 
@@ -67,6 +71,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'curative.urls'
+
+LOGIN_URL = 'handel_work_request'
+LOGIN_REDIRECT_URL = 'user_login'
 
 TEMPLATES = [
     {

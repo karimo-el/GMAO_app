@@ -1,12 +1,15 @@
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse
 from django.shortcuts import render
 from .models import work_request
 from .forms import handel_create_dt_form, handel_update_dt_form
+from django.contrib.auth.models import Permission
+
 
 # Create your views here.
 
-
+@login_required(login_url = 'user_login')
 def handel_work_request(request):
 
     all_work_request = work_request.objects.all()
@@ -15,12 +18,22 @@ def handel_work_request(request):
 
     return render(request, 'dt/index.html', context)
 
+
+@login_required
 def handel_view_work_request(request, id):
     work_request = work_request.objects.get(pk = id)
     return HttpResponseRedirect(reverse("handel_work_request"))
 
 
+@login_required
+@permission_required('dt.add_work_request', login_url = '/curative' )
 def handel_new_wr(request):
+    data= request.user.has_perm('dt.add_work_request')
+    permission = Permission.objects.filter(user= request.user)
+    print(permission)
+
+    print("data :", data)
+
     if request.method == 'POST':
         form = handel_create_dt_form(request.POST)
         if form.is_valid():
@@ -55,6 +68,8 @@ def handel_new_wr(request):
         context = {'form':form}
         return render(request, 'dt/add_wr.html', context)    
 
+
+# @login_required(login_url= 'user-login')
 def handel_edit_wr(request, id):
 
     if request.method == 'POST':
@@ -74,7 +89,7 @@ def handel_edit_wr(request, id):
         context = {'form':form}
         return render(request, "dt/edit_wr.html", context)
 
-
+# @login_required(login_url='user-login')
 def handel_delete_wr(request, id):
     print("on")
     if request.method == 'POST':

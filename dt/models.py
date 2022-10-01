@@ -40,6 +40,9 @@ class work_request(models.Model):
 
     def __str__(self):
         return self.equipement
+    
+    class Meta:
+        verbose_name_plural = 'Demande de travaux'
 
 
 # class raport_intervention(models.Model):
